@@ -1,10 +1,127 @@
 {% extends 'enrollStaff/base.html' %}
 {#Page Title#}
-{% block title%}Enroll Page{% endblock %}
+{% block title %}Enroll Page{% endblock %}
 {#body#}
 {% block body %}
-     <div class="container mt-5">
+    <div class="container mt-5">
         <h2 class="text-center alert alert-danger">Welcome To Codeforcore CRUD Django</h2>
+        <div class="row">
+            <div class="col-sm-4">
+                <h4 class="text-center alert alert-info">Add New Staff</h4>
+                <form method="POST" action="">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="id_name">Name:</label>
+                        <input type="text" class="form-control" name="name" maxlength="70" required
+                               id="id_name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_email">Email:</label>
+                        <input type="email" class="form-control" name="email" maxlength="250"
+                               required
+                               id="id_email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_staffType">Staff Type</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="staffType" id="id_staffType"
+                                   value="Admin" required>
+                            <label class="form-check-label" for="Admin">Admin</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="staffType" id="id_staffType"
+                                   value="Staff" required>
+                            <label class="form-check-label" for="Staff">Staff</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="staffType" id="id_staffType"
+                                   value="Intern" required>
+                            <label class="form-check-label" for="Intern">Intern</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_age">Age:</label>
+                        <input type="number" class="form-control" name="age" min="0" required id="id_age">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_gender">Gender</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="Male"
+                                   value="Male" required>
+                            <label class="form-check-label" for="Male">Male&nbsp;</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="gender" id="female"
+                                   value="Female" required>
+                            <label class="form-check-label" for="Female">Female&nbsp; </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio3"
+                                   value="Others" required>
+                            <label class="form-check-label" for="inlineRadio3">Others&nbsp; </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password">Password:</label>
+                        <input type="password" class="form-control" name="password" maxlength="100"
+                               required
+                               id="id_password">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Add Staff</button>
+                </form>
+            </div>
+            <div class="col-sm-7 offset-1">
+                <h4 class="text-center alert alert-info">Staff Information</h4>
+                {% if  staff %}
+                    Staff Table
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Staff type</th>
+                            <th scope="col"> Age</th>
+                            <th></th>
+                            <th scope="col"> Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for st in staff %}
+                        <tr>
+
+
+                            <th scope="row">{{ st.id }}</th>
+                            <td>{{ st.name }}</td>
+                            <td>{{ st.gender }}</td>
+                            <td>{{ st.staffType }}</td>
+                            <td>{{ st.age }}</td>
+                            <td></td>
+                            <td>
+                                <a href="#" class="btn btn-info btn-sm">View</a>&nbsp;&nbsp;
+                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{% url 'deleteStaff' st.id%}" method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-danger btn-sm" value="delete">
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </table>
+                {% else %}
+                    no data
+                {% endif %}
+            </div>
+        </div>
 
     </div>
+
 {% endblock %}
