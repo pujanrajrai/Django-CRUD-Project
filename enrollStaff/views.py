@@ -19,7 +19,7 @@ def index(request):
     return render(request, 'enrollStaff/addAndViewStaff.html', {'staff': staff})
 
 
-def deleteStaff(request,id):
+def deleteStaff(request, id):
     if request.method == 'POST':
         pi = CreateStaff.objects.get(pk=id)
         pi.delete()
@@ -30,9 +30,21 @@ def addAndViewStaff(request):
     return render(request, 'enrollStaff/addAndViewStaff.html')
 
 
-def updateStaff(request):
-    return render(request, 'enrollStaff/updateStaff.html')
+def updateStaff(request, id):
+    if request.method == 'POST':
+        pi = CreateStaff.objects.get(pk=id)
+        forms = StaffRegistration(request.POST, instance=pi)
+        if forms.is_valid():
+            forms.save()
+    else:
+        pi = CreateStaff.objects.get(pk=id)
+        forms = StaffRegistration(instance=pi)
+    print(pi.password)
+    return render(request, 'enrollStaff/updateStaff.html', {'forms': forms,'pi':pi})
 
 
-def viewProfileStaff(request):
-    return render(request, 'enrollStaff/viewProfileStaff.html')
+def viewProfileStaff(request,id):
+    if request.method=='GET':
+        pi = CreateStaff.objects.get(pk=id)
+
+    return render(request, 'enrollStaff/viewProfileStaff.html',{'pi':pi})

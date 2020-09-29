@@ -1,10 +1,78 @@
 {% extends 'enrollStaff/base.html' %}
 {#Page Title#}
-{% block title%}Update Page{% endblock %}
+{% block title %}Update Page{% endblock %}
 {#body#}
 {% block body %}
-     <div class="container mt-5">
+    <div class="container mt-5">
         <h2 class="text-center alert alert-danger">Codeforcore CRUD Django Update Page</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_name">Name:</label>
+                <input type="text" class="form-control" name="name" maxlength="70" required
+                       id="id_name" value="{{ pi.name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                <input type="email" class="form-control" name="email" maxlength="250"
+                       required
+                       id="id_email" value="{{ pi.email }}">
+            </div>
+
+            <div class="form-group">
+                <label for="id_staffType">Staff Type</label>
+                <br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="staffType" id="id_staffType"
+                           value="Admin" required {% if pi.staffType == "Admin"  %}checked="checked" {% endif %}>
+                    <label class="form-check-label" for="Admin">Admin</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="staffType" id="id_staffType"
+                           value="Staff" required {% if pi.staffType == "Staff" %}checked="checked" {% endif %}>
+                    <label class="form-check-label" for="Staff">Staff</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="staffType" id="id_staffType"
+                           value="Intern" {% if pi.staffType == "Intern" %}checked="checked" {% endif %} required>
+                    <label class="form-check-label" for="Intern">Intern</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_age">Age:</label>
+                <input type="number" class="form-control" name="age" min="0" required id="id_age" value="{{ pi.age }}">
+            </div>
+            <div class="form-group">
+                <label for="id_gender">Gender</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="Male"
+                           value="Male" required {% if pi.gender == "Male"  %}checked="checked" {% endif %}>
+                    <label class="form-check-label" for="Male">Male&nbsp;</label>
+                </div>
+                <div class="form-check form-check-inline">
+
+                    <input class="form-check-input" type="radio" name="gender" id="female"
+                           value="Female" required {% if pi.gender == "Female"  %}checked="checked" {% endif %}>
+                    <label class="form-check-label" for="Female">Female&nbsp; </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio3"
+                           value="Others" required {% if pi.gender == "Others"  %}checked="checked" {% endif %}>
+                    <label class="form-check-label" for="inlineRadio3">Others&nbsp; </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                <input type="password" class="form-control" name="password" maxlength="100"
+                       required
+                       id="id_password" value="{{ pi.password }}">
+            </div>
+            <input type="submit" class="btn btn-success" value="Update">
+            <a href="{% url 'homePage' %}" class="btn btn-sucess">Back to home</a>
+        </form>
+
 
     </div>
 {% endblock %}
